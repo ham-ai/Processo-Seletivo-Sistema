@@ -1,9 +1,14 @@
 package candidatura;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
     public static void main(String[] args) {
-        imprimirSelecionados();
+        String [] candidatos = {"Lucas", "Carlos", "Roberta", "Heitor", "Flávio"};
+
+        for(String candidato: candidatos){
+            entrarEmContato(candidato);
+        }
     }
 
     static void imprimirSelecionados(){
@@ -14,6 +19,35 @@ public class Main {
         for (int indice = 0;indice < candidatos.length; indice++){
             System.out.println("O candidato de nº"+(indice+1)+" é "+candidatos[indice]);
         }
+    }
+
+    static void entrarEmContato(String candidato){
+        int tentativaFeitas = 1;
+        boolean continuarTentativa = true;
+        boolean atendeu = false;
+
+        do{
+            atendeu = atender();
+            continuarTentativa = !atendeu;
+
+            if (continuarTentativa){
+                tentativaFeitas++;
+            }else{
+                System.out.println("\nCONTATO REALIZADO COM SUCESSO!");
+            }
+        }
+        while(continuarTentativa && tentativaFeitas < 3);
+
+        if (atendeu){
+            System.out.println("\nConseguimos contato com "+candidato+" na "+tentativaFeitas+" tentativa");
+        }else{
+            System.out.println("\nNão conseguimos contato com "+candidato+", número máximo tentativas "+tentativaFeitas+" realizadas");
+        }
+    }
+
+    //método auxiliar
+    static boolean atender(){
+        return new Random().nextInt(3)==1;
     }
 
     static void selecaoCandidatos(){
